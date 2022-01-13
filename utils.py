@@ -14,18 +14,24 @@ def get_head_tail_ext(path):
 def face_cascade(img):
     face_file = 'haarcascade_frontalface_default.xml'
     eye_file = 'haarcascade_eye.xml'
+    smile_file = 'haarcascade_smile.xml'
     face_cascade = cv2.CascadeClassifier(face_file)
     eye_cascade = cv2.CascadeClassifier(eye_file)
+    smile_cascade = cv2.CascadeClassifier(smile_file)
     faces = face_cascade.detectMultiScale(img)
     face_coor = list()
     eye_coor = list()
+    smile_coor = list()
     for (x, y, w, h) in faces:
         face_coor.append([x, y, w, h])
         roi = img[y:y + h, x:x + w]
         eyes = eye_cascade.detectMultiScale(roi)
+        smile = smile_cascade.detectMultiScale(roi)
         for (ex, ey, ew, eh) in eyes:
             eye_coor.append([ex, ey, ew, eh])
-    return face_coor, eye_coor
+        for (sx, sy, sw, sh) in smile:
+            smile_coor.append([sx, sy, sw, sh])
+    return face_coor, eye_coor, smile_coor
 
 
 def car_cascade(img):
@@ -86,10 +92,12 @@ def detect_in_video(path, detect):
             for coor in cars:
                 frame = draw_rect(frame, coor)
         elif detect == 'face':
-            faces, eyes = face_cascade(gray)
+            faces, eyes, smile = face_cascade(gray)
             for coor in faces:
                 img = draw_rect(img, coor)
             for coor in eyes:
+                img = draw_rect(img, coor)
+            for coor in smile:
                 img = draw_rect(img, coor)
         else:
             message = 'Could not find detector'
@@ -117,10 +125,12 @@ def detect_in_image(path, detect):
         for coor in cars:
             img = draw_rect(img, coor)
     elif detect == 'face':
-        faces, eyes = face_cascade(gray)
+        faces, eyes, smile = face_cascade(gray)
         for coor in faces:
             img = draw_rect(img, coor)
         for coor in eyes:
+            img = draw_rect(img, coor)
+        for coor in smile:
             img = draw_rect(img, coor)
     else:
         message = 'Could not find detector'
