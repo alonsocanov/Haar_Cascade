@@ -1,4 +1,3 @@
-import cv2
 import argparse
 import utils
 
@@ -6,7 +5,7 @@ import utils
 def main():
     parser = argparse.ArgumentParser()
     # file path argument
-    parser.add_argument("--path", type=str, default='../../data/traffic/Traffic_Road.mp4',
+    parser.add_argument("--path", type=str, default='dataset/Traffic_Road.mp4',
                         help="file path to file")
     parser.add_argument("--detect", type=str, default='car',
                         help="object to detect ooption [face, car]")

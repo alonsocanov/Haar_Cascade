@@ -12,9 +12,9 @@ def get_head_tail_ext(path):
 
 
 def face_cascade(img):
-    face_file = 'haarcascade_frontalface_default.xml'
-    eye_file = 'haarcascade_eye.xml'
-    smile_file = 'haarcascade_smile.xml'
+    face_file = 'haarcascade/frontalface_default.xml'
+    eye_file = 'haarcascade/eye.xml'
+    smile_file = 'haarcascade/smile.xml'
     face_cascade = cv2.CascadeClassifier(face_file)
     eye_cascade = cv2.CascadeClassifier(eye_file)
     smile_cascade = cv2.CascadeClassifier(smile_file)
@@ -35,7 +35,7 @@ def face_cascade(img):
 
 
 def car_cascade(img):
-    car_file = 'cars.xml'
+    car_file = 'haarcascade/cars.xml'
     car_cascade = cv2.CascadeClassifier(car_file)
     cars = car_cascade.detectMultiScale(img, 1.1, 1)
     cars_coor = list()
